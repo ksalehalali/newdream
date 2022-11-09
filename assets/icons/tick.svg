@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="13.847" height="13.846" viewBox="0 0 13.847 13.846">
+  <defs>
+    <clipPath id="clip-path">
+      <path id="Shape" d="M6.923,13.847a6.923,6.923,0,1,1,6.924-6.924A6.931,6.931,0,0,1,6.923,13.847Zm-3.87-7.9h0l-.976.976,3.461,3.461,6.231-6.231-.977-.983L5.539,8.426,3.053,5.947Z" transform="translate(0.077 0.077)" fill="#1cd54d"/>
+    </clipPath>
+  </defs>
+  <g id="tick" transform="translate(-0.077 -0.077)">
+    <path id="Shape-2" data-name="Shape" d="M6.923,13.847a6.923,6.923,0,1,1,6.924-6.924A6.931,6.931,0,0,1,6.923,13.847Zm-3.87-7.9h0l-.976.976,3.461,3.461,6.231-6.231-.977-.983L5.539,8.426,3.053,5.947Z" transform="translate(0.077 0.077)" fill="#1cd54d"/>
+    <g id="Ico_fettle_proper" data-name="Ico/fettle/proper" clip-path="url(#clip-path)">
+      <g id="Color_A" data-name="Color/A" transform="translate(-3 -3)">
+        <rect id="Color_F-P" data-name="Color/F-P" width="20" height="20" fill="#1cd54d"/>
+      </g>
+    </g>
+  </g>
+</svg>

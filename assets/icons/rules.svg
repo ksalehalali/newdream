@@ -1,0 +1,9 @@
+<svg id="vuesax_linear_clipboard-text" data-name="vuesax/linear/clipboard-text" xmlns="http://www.w3.org/2000/svg" width="20.023" height="20.023" viewBox="0 0 20.023 20.023">
+  <g id="clipboard-text">
+    <path id="Vector" d="M0,0H5.84" transform="translate(6.674 10.178)" fill="none" stroke="#515c6f" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
+    <path id="Vector-2" data-name="Vector" d="M0,0H3.654" transform="translate(6.674 13.516)" fill="none" stroke="#515c6f" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
+    <path id="Vector-3" data-name="Vector" d="M1.669,3.337H5.006c1.669,0,1.669-.834,1.669-1.669C6.674,0,5.84,0,5.006,0H1.669C.834,0,0,0,0,1.669S.834,3.337,1.669,3.337Z" transform="translate(6.674 1.669)" fill="none" stroke="#515c6f" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
+    <path id="Vector-4" data-name="Vector" d="M10.846,0c2.778.15,4.171,1.176,4.171,4.989V9.995c0,3.337-.834,5.006-5.006,5.006H5.006C.834,15,0,13.332,0,9.995V4.989C0,1.185,1.393.15,4.171,0" transform="translate(2.503 3.354)" fill="none" stroke="#515c6f" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
+    <path id="Vector-5" data-name="Vector" d="M0,0H20.023V20.023H0Z" fill="none" opacity="0"/>
+  </g>
+</svg>
