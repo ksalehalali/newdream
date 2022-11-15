@@ -72,6 +72,7 @@ Map<String,String> ar ={
 
   'Create A New Account_txt':'انشاء حساب جديد',
   'Username_txt':'اسم المستخدم',
+  "Phone number_txt":'Phone number',
   'Email_txt':'البريد الإلكتروني',
   'Password_txt':'كلمة المرور',
   'Confirm Password_txt':'تاكيد كلمة المرور',

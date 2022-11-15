@@ -1,9 +1,12 @@
+import 'package:carousel_slider/carousel_options.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_blurhash/flutter_blurhash.dart';
 import 'package:get/get.dart';
 import '../../Assistants/globals.dart';
 import '../../Data/data_for_ui.dart';
+import '../../controllers/banners_controller.dart';
 import '../../controllers/catgories_controller.dart';
 import '../../controllers/lang_controller.dart';
 import '../../controllers/product_controller.dart';
@@ -25,7 +28,31 @@ class _OffersScreenState extends State<OffersScreen> {
   final ProductsController productController = Get.find();
   final LangController langController = Get.find();
   final CategoriesController categoriesController = Get.find();
+  final BannerController bannerController = Get.find();
 
+
+  Widget _buildCarouselImages(){
+    final screenSize = Get.size;
+    return CarouselSlider(
+      options: CarouselOptions(height: screenSize.width,
+          viewportFraction: 1,
+          autoPlay: true
+      ),
+      items: bannerController.banner2.map((i) {
+        return Builder(
+          builder: (BuildContext context) {
+            return Container(
+                width: screenSize.width,
+                decoration: BoxDecoration(
+                    color: Colors.white
+                ),
+                child: i
+            );
+          },
+        );
+      }).toList(),
+    );
+  }
   @override
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.of(context).size;
@@ -64,11 +91,7 @@ class _OffersScreenState extends State<OffersScreen> {
             Container(
                 height:screenSize.height*0.2 -10.h,
                 width: screenSize.width.w,
-                child: Image.asset(
-                  'assets/images/pexels-artem-beliaikin-2529787 1.jpg',
-                  fit: BoxFit.fill,
-
-                )),
+                child: _buildCarouselImages()),
             // Container(
             //   height: 300,
             //    child: BlurHash(hash: 'f8C6M\$9tcY,FKOR*00%2RPNaaKjZUawdv#K4\$Ps:HXELTJ,@XmS2=yxuNGn%IoR*'),

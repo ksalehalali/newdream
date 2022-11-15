@@ -7,6 +7,7 @@ import 'package:shimmer/shimmer.dart';
 
 import '../../../Assistants/globals.dart';
 import '../../../controllers/address_location_controller.dart';
+import '../../../controllers/banners_controller.dart';
 import '../../../controllers/catgories_controller.dart';
 import '../../../controllers/lang_controller.dart';
 import '../../../controllers/product_controller.dart';
@@ -38,6 +39,7 @@ class _HomeScreenState extends State<HomeScreen> {
   final AddressController addressController = Get.find();
   final LangController langController = Get.find();
   final CategoriesController categoriesController = Get.find();
+  final BannerController bannerController = Get.find();
 
   ScrollController? scrollController;
 
@@ -59,30 +61,19 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
-  var images = [
-  Image.asset(
-  'assets/images/pexels-markus-spiske-3806753.jpg',
-  fit: BoxFit.fill),
-  Image.asset('assets/images/productsample.jpg',
-  fit: BoxFit.fill),
-  Image.asset(
-  'assets/images/Qatar-Online-Marketing-Profile.jpg',
-  fit: BoxFit.fill),
-  ];
-
   @override
   void dispose() {
     // TODO: implement dispose
     super.dispose();
   }
-Widget _buildCrosolImages(){
+Widget _buildCarouselImages(){
     final screenSize = Get.size;
     return CarouselSlider(
       options: CarouselOptions(height: screenSize.width,
           viewportFraction: 1,
           autoPlay: true
       ),
-      items: images.map((i) {
+      items: bannerController.banner1.map((i) {
         return Builder(
           builder: (BuildContext context) {
             return Container(
@@ -158,7 +149,7 @@ Widget _buildCrosolImages(){
                         SizedBox(
                           height: screenSize.height*0.2.h,
                           width:screenSize.width,
-                          child: _buildCrosolImages()),
+                          child: Obx(()=> bannerController.gotBanner1.value==true ?_buildCarouselImages():Container())),
                          SizedBox(
                           height: 22.0.h,
                         ),

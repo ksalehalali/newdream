@@ -7,6 +7,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart' as loc;
 import 'package:geolocator/geolocator.dart' as geo;
 import 'package:lottie/lottie.dart';
+import 'package:newdream/controllers/banners_controller.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'Assistants/globals.dart';
 import 'controllers/address_location_controller.dart';
@@ -34,6 +35,7 @@ void main() async {
   final langController =Get.putAsync(() async => LangController(),permanent: true);
   final paymentController =Get.putAsync(() async => PaymentController(),permanent: true);
   final registerController =Get.putAsync(() async => RegisterController(),permanent: true);
+  final bannerController =Get.putAsync(() async => BannerController(),permanent: true);
 
   runApp( ScreenUtilInit(
       designSize: const Size(380, 810),

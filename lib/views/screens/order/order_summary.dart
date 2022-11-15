@@ -32,7 +32,6 @@ class _OrderSummaryState extends State<OrderSummary> {
 
   @override
   Widget build(BuildContext context) {
-    int indexAddress = storage.read("indexAddressSelected");
     final screenSize = MediaQuery.of(context).size;
 
     return Container(

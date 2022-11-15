@@ -5,6 +5,8 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_countdown_timer/countdown_timer_controller.dart';
+import 'package:flutter_countdown_timer/flutter_countdown_timer.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
@@ -29,9 +31,35 @@ class RegisterController extends GetxController with BaseController {
   final signUpEmailController = TextEditingController();
   final signUpPasswordController = TextEditingController();
   final signUpConfirmPasswordController = TextEditingController();
+  final codeController = new TextEditingController();
+
+  var phoneNumber='';
   final storage = GetStorage();
   var isRegisterLoading = false.obs;
   var isLoggedIn = false.obs;
+  int endTime = DateTime.now().millisecondsSinceEpoch + 1000 * 120;
+  late CountdownTimerController controller;
+
+  @override
+  void onInit() {
+    // TODO: implement onInit
+    super.onInit();
+    controller = CountdownTimerController(endTime: endTime, onEnd: onEnd);
+  }
+
+  void onEnd() {
+    print('onEnd');
+  }
+  @override
+  void onClose() {
+    super.onClose();
+    loginEmailController.dispose();
+    loginPasswordController.dispose();
+    signUpUsernameController.dispose();
+    signUpEmailController.dispose();
+    signUpPasswordController.dispose();
+    signUpConfirmPasswordController.dispose();
+  }
 
   Future<void> makeLoginRequest () async{
     if(loginEmailController.text != "" || loginPasswordController.text != ""){
@@ -92,6 +120,7 @@ print('login...');
       }
       else if (response.statusCode == 200){
         isLoggedIn.value = true;
+        accountController.isLoggedIn.value =true;
         var jsonResponse = json.decode(response.body);
         if(jsonResponse["status"]){
           print('user data ::: ${jsonResponse["description"]}');
@@ -169,6 +198,7 @@ print('login...');
       if(jsonResponse["status"]){
         print("auttto login ${jsonResponse["description"]}");
         print('user data ::: ${jsonResponse["description"]}');
+        accountController.isLoggedIn.value =true;
 
         token = jsonResponse["description"]["token"];
         storeUserLoginPreference(jsonResponse["description"]["token"], jsonResponse["description"]["userName"], password, jsonResponse["description"]["id"],jsonResponse["description"]["email"]);
@@ -241,10 +271,91 @@ print('login...');
 
   }
 
-  Future <void> makeRegisterRequest () async {
+
+  Future<void> makeCodeConfirmationRequest(context) async{
+
+    List<String> codeCredentials = [
+      phoneNumber.replaceAll("+", ""),
+      codeController.text
+    ];
+
+    var head = {
+      "Accept": "application/json",
+      "content-type":"application/json"
+    };
+
+    print("sssss");
+    print("${codeCredentials[0]}");
+    print("${codeCredentials[1]}");
+
+    if (codeCredentials[1].isEmpty) {
+      Fluttertoast.showToast(
+          msg: "Please Enter the code",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.CENTER,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.white70,
+          textColor: Colors.black,
+          fontSize: 16.0);
+    } else {
+      var response = await http.post(Uri.parse(baseURL + "/api/ConfirmPhoneNumber"), body: jsonEncode(
+        {
+          "UserName": "${codeCredentials[0]}",
+          "Code": codeCredentials[1]
+        },
+      ), headers: head
+      ).timeout(const Duration(seconds: 20), onTimeout:() {
+        Fluttertoast.showToast(
+            msg: "The connection has timed out, Please try again!",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.CENTER,
+            timeInSecForIosWeb: 1,
+            backgroundColor: Colors.white70,
+            textColor: Colors.black,
+            fontSize: 16.0
+        );
+        throw TimeoutException('The connection has timed out, Please try again!');
+      });
+
+      if(response.statusCode == 200) {
+        var jsonResponse = json.decode(response.body);
+        if(jsonResponse["status"]){
+          Navigator.pop(context, 'OK');
+          //add the installation to promoter
+
+
+
+          //Get.to(()=>MainScreen(indexOfScreen: 0,));
+        } else{
+          Fluttertoast.showToast(
+              msg: "${jsonResponse["description"]}",
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.CENTER,
+              timeInSecForIosWeb: 1,
+              backgroundColor: Colors.white70,
+              textColor: Colors.black,
+              fontSize: 16.0);
+        }
+      } else{
+        Fluttertoast.showToast(
+            msg: "Error ${response.statusCode}",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.CENTER,
+            timeInSecForIosWeb: 1,
+            backgroundColor: Colors.white70,
+            textColor: Colors.black,
+            fontSize: 16.0);
+      }
+    }
+
+  }
+
+  Future <void> makeRegisterRequest (BuildContext context) async {
     print("CALLING makeRegisterRequest");
     clearUserData();
-    if(signUpUsernameController.text == "" || signUpEmailController.text == "" || signUpPasswordController.text == "" || signUpConfirmPasswordController.text == "" ) {
+    if (signUpUsernameController.text == "" ||
+        signUpPasswordController.text == "" ||
+        signUpConfirmPasswordController.text == "") {
       // Fill the required information
       Fluttertoast.showToast(
           msg: "Please fill the required information",
@@ -255,7 +366,8 @@ print('login...');
           textColor: Colors.black,
           fontSize: 16.0
       );
-    } else if (signUpPasswordController.text != signUpConfirmPasswordController.text){
+    } else
+    if (signUpPasswordController.text != signUpConfirmPasswordController.text) {
       // passwords do not match
       Fluttertoast.showToast(
           msg: "Passwords do not match",
@@ -271,16 +383,17 @@ print('login...');
 
       var head = {
         "Accept": "application/json",
-        "content-type":"application/json"
+        "content-type": "application/json"
       };
 
-      var response = await http.post(Uri.parse(baseURL + "/api/Register"), body: jsonEncode(
+      var response = await http.post(
+          Uri.parse(baseURL + "/api/Register"), body: jsonEncode(
         {
-          "UserName": signUpUsernameController.text,
+          "UserName": phoneNumber.replaceAll("+", ""),
           "Password": signUpPasswordController.text
         },
       ), headers: head
-      ).timeout(const Duration(seconds: 20), onTimeout:(){
+      ).timeout(const Duration(seconds: 20), onTimeout: () {
         Fluttertoast.showToast(
             msg: "The connection has timed out, Please try again!",
             toastLength: Toast.LENGTH_SHORT,
@@ -290,32 +403,100 @@ print('login...');
             textColor: Colors.black,
             fontSize: 16.0
         );
-        throw TimeoutException('The connection has timed out, Please try again!');
+        throw TimeoutException(
+            'The connection has timed out, Please try again!');
       });
 
       print("reqqq: ${response.body}");
 
-      if(response.statusCode == 200) {
+      if (response.statusCode == 200) {
         var jsonResponse = json.decode(response.body);
         print('register data  = $jsonResponse');
-        if(jsonResponse["status"]){
+        if (jsonResponse["status"]) {
           // Sign up successful
-           makeAutoLoginRequest(signUpUsernameController.text, signUpPasswordController.text);
+          if (jsonResponse["status"]) {
+            print(jsonResponse["description"]);
+            endTime = DateTime.now().millisecondsSinceEpoch + 1000 * 120;
+            showDialog<String>(
+                context: context,
+                barrierDismissible: false,
+                builder: (BuildContext context) {
+                  print("Ssssssssssssssssss");
+                  return AlertDialog(
+                    title: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "Enter the SMS code",
+                          style: TextStyle(
+                              color: Color.fromRGBO(46, 96, 113, 1),
+                              fontSize: 16
+                          ),
+                        ),
+                        Container(
+                          margin: EdgeInsets.only(left: 0, right: 0),
+                          alignment: Alignment.topRight,
+                          child: GestureDetector(
+                              onTap: () {
+                                Navigator.pop(context);
+                              },
+                              child: Icon(Icons.cancel, color: Color.fromRGBO(
+                                  46, 96, 113, 1), size: 25,)
+                          ),
+                        ),
+                      ],
+                    ),
+                    // CODE TEXT FIELD
+                    content: Container(
+                        width: 300,
+                        height: 100,
+                        child: Column(
+                          children: [
+                            CountdownTimer(
+                              endTime: endTime,
+                              onEnd: onEnd,
+                            ),
+                            SizedBox(height: 16,),
+                            TextField(
+                              controller: codeController,
+                              keyboardType: TextInputType.number,
+                            ),
+                          ],
+                        )
+                    ),
+                    actions: <Widget>[
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          TextButton(
+                            onPressed: () => Navigator.pop(context, 'Cancel'),
+                            child: Text("Cancel"),
+                          ),
+                          TextButton(
+                            onPressed: () async {
+                              await makeCodeConfirmationRequest(context);
+                            },
+                            child: Text("Ok"),
+                          ),
+                        ],
+                      ),
+                    ],
+                  );
+                }
+            );
+          } else {
+            Fluttertoast.showToast(
+                msg: "This Username is already used",
+                toastLength: Toast.LENGTH_SHORT,
+                gravity: ToastGravity.CENTER,
+                timeInSecForIosWeb: 1,
+                backgroundColor: Colors.white70,
+                textColor: Colors.black,
+                fontSize: 16.0);
+          }
         } else {
-          Fluttertoast.showToast(
-              msg: "This Username is already used",
-              toastLength: Toast.LENGTH_SHORT,
-              gravity: ToastGravity.CENTER,
-              timeInSecForIosWeb: 1,
-              backgroundColor: Colors.white70,
-              textColor: Colors.black,
-              fontSize: 16.0);
+          // error
         }
-      } else {
-        // error
       }
-
     }
-  }
-
-}
+  }}

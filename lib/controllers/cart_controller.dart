@@ -166,7 +166,10 @@ class CartController extends GetxController with BaseController {
         'POST', Uri.parse('https://dashcommerce.click68.com/api/EditCart'));
     request.body = json.encode({"id": id, "Number": count});
     request.headers.addAll(headers);
-
+    request.body = json.encode({
+      "PageSize": 100,
+      "PageNumber": 1
+    });
     http.StreamedResponse response = await request.send();
 
     if (response.statusCode == 200) {
@@ -250,7 +253,7 @@ class CartController extends GetxController with BaseController {
     };
     var request = http.Request('POST',
         Uri.parse('https://dashcommerce.click68.com/api/ListOrderByUser'));
-    request.body = json.encode({"PageNumber": "0", "SizeNumber": "22"});
+    request.body = json.encode({"PageNumber": 1, "SizeNumber": 22});
     request.headers.addAll(headers);
 
     http.StreamedResponse response = await request.send();

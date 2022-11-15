@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../Assistants/globals.dart';
@@ -75,7 +76,7 @@ class _RegisterState extends State<Register> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Username_txt".tr,
+                    "Phone number_txt".tr,
                     style: TextStyle(
                       color: myHexColor2,
                       fontWeight: FontWeight.bold,
@@ -229,7 +230,7 @@ class _RegisterState extends State<Register> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Email_txt".tr,
+                    "Phone number_txt".tr,
                     style: TextStyle(
                       color: myHexColor2,
                       fontWeight: FontWeight.bold,
@@ -325,6 +326,7 @@ class _RegisterState extends State<Register> {
     }
   }
 
+  String? phoneNumber;
 
   @override
   Widget build(BuildContext context) {
@@ -340,7 +342,7 @@ class _RegisterState extends State<Register> {
             child: Column(
               children: [
                 const SizedBox(
-                  height: 10,
+                  height: 3,
                 ),
                 // CLOSE
                 Container(
@@ -383,7 +385,7 @@ class _RegisterState extends State<Register> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              "Email_txt".tr,
+                              "Phone number_txt".tr,
                               style: TextStyle(
                                 color: myHexColor2,
                                 fontWeight: FontWeight.bold,
@@ -492,31 +494,39 @@ class _RegisterState extends State<Register> {
                           ),
                         ),
                         SizedBox(
-                          height: 32.h,
+                          height: 28.h,
                         ),
                         // USERNAME TEXT FIELD
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
-                              "Username_txt".tr,
-                              style: TextStyle(
-                                color: myHexColor2,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
                             Theme(
                               data: ThemeData.from(
                                 colorScheme: ColorScheme.fromSwatch(
                                     primarySwatch: primaryColorSwatch),
                               ),
-                              child: TextField(
-                                controller: registerController.signUpUsernameController,
-                                enabled: showSignUp.value,
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black87,
-                                ),
+                              child:   SizedBox(
+                                  width: screenSize.width * 0.9,
+                                  child: IntlPhoneField(
+                                    decoration: InputDecoration(
+                                      labelText: 'Phone_txt'.tr,
+
+                                      focusColor: myHexColor,
+                                      labelStyle: TextStyle(fontSize: 15),
+                                      hoverColor: Colors.grey,
+                                      enabled: showSignUp.value,
+                                      // border: OutlineInputBorder(
+                                      //   borderSide: BorderSide(color: myHexColor),
+                                      // ),
+                                    ),
+                                    initialCountryCode: 'QA',
+                                    onChanged: (phone) {
+                                      print(phone.completeNumber);
+                                      phoneNumber = phone.completeNumber;
+                                      registerController.phoneNumber = phoneNumber!;
+                                      print(phoneNumber);
+                                    },
+                                  )
                               ),
                             ),
                           ],
@@ -528,25 +538,26 @@ class _RegisterState extends State<Register> {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
-                              "Email_txt".tr,
-                              style: TextStyle(
-                                color: myHexColor2,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
                             Theme(
                               data: ThemeData.from(
                                 colorScheme: ColorScheme.fromSwatch(
                                     primarySwatch: primaryColorSwatch),
                               ),
                               child: TextField(
-                                controller: registerController.signUpEmailController,
+                                controller: registerController.signUpUsernameController,
                                 enabled: showSignUp.value,
+                                decoration: InputDecoration(
+                                  hintText: "Name_txt".tr,
+                                  hintStyle: TextStyle(
+                                    color: Colors.grey,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   color: Colors.black87,
                                 ),
+
                               ),
                             ),
                           ],
@@ -558,13 +569,7 @@ class _RegisterState extends State<Register> {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
-                              "Password_txt".tr,
-                              style: TextStyle(
-                                color: myHexColor2,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
+
                             Theme(
                               data: ThemeData.from(
                                 colorScheme: ColorScheme.fromSwatch(
@@ -574,7 +579,10 @@ class _RegisterState extends State<Register> {
                                 controller: registerController.signUpPasswordController,
                                 enabled: showSignUp.value,
                                 obscureText: true,
-                                decoration: InputDecoration(),
+                                decoration: InputDecoration(hintText: "Password_txt".tr,hintStyle: TextStyle(
+                                  color: Colors.grey,
+                                  fontWeight: FontWeight.bold,
+                                ),),
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   color: Colors.black87,
@@ -590,13 +598,7 @@ class _RegisterState extends State<Register> {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
-                              "Confirm Password_txt".tr,
-                              style: TextStyle(
-                                color: myHexColor2,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
+
                             Theme(
                               data: ThemeData.from(
                                 colorScheme: ColorScheme.fromSwatch(
@@ -607,7 +609,10 @@ class _RegisterState extends State<Register> {
                                 registerController.signUpConfirmPasswordController,
                                 enabled: showSignUp.value,
                                 obscureText: true,
-                                decoration: InputDecoration(),
+                                decoration: InputDecoration(hintText: "Confirm Password_txt".tr,hintStyle:TextStyle(
+                                  color: Colors.grey,
+                                  fontWeight: FontWeight.bold,
+                                ), ),
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   color: Colors.black87,
@@ -652,8 +657,9 @@ class _RegisterState extends State<Register> {
                             } else {
                               registerController.isRegisterLoading.value =
                               true;
+
                               await registerController
-                                  .makeRegisterRequest();
+                                  .makeRegisterRequest(context);
                               registerController.isRegisterLoading.value =
                               false;
                             }
