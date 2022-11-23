@@ -26,7 +26,7 @@ class BannerController extends GetxController{
   }
 
   Future getBanner1()async{
-    var request = http.Request('GET', Uri.parse('$baseURL/api/ListBanner2'));
+    var request = http.Request('GET', Uri.parse('$baseURL/api/ListBanner1'));
 
 
     http.StreamedResponse response = await request.send();

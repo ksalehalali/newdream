@@ -105,6 +105,8 @@ Map<String,String> ar ={
   'No Addresses_txt':'لا يوجد عناوين',
   'Add a new address_txt':'اضف عنوان جديد',
   'Name_txt':'الاسم',
+  "LastName_txt":"الاسم الاخير",
+  "First Name_txt":"الاسم الاول",
   'Phone_txt':'رقم الجوال',
   'Address_txt':'العنوان',
   'CONFIRM LOCATION_txt':'تاكيد الموقع',
@@ -273,6 +275,8 @@ Map<String,String> en ={
 
   'Create A New Account_txt':'Create a new account',
   'Username_txt':'Username',
+  "LastName_txt":"Last Name",
+  "First Name_txt":"First Name",
   'Email_txt':'Email',
   'Password_txt':'Password',
   'Confirm Password_txt':'Confirm Password',

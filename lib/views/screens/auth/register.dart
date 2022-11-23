@@ -88,7 +88,7 @@ class _RegisterState extends State<Register> {
                           primarySwatch: primaryColorSwatch),
                     ),
                     child: TextField(
-                      controller: registerController.signUpUsernameController,
+                      controller: registerController.signUpFirstNameController,
                       enabled: showSignUp.value,
                       style: const TextStyle(
                         fontWeight: FontWeight.bold,
@@ -544,10 +544,10 @@ class _RegisterState extends State<Register> {
                                     primarySwatch: primaryColorSwatch),
                               ),
                               child: TextField(
-                                controller: registerController.signUpUsernameController,
+                                controller: registerController.signUpFirstNameController,
                                 enabled: showSignUp.value,
                                 decoration: InputDecoration(
-                                  hintText: "Name_txt".tr,
+                                  hintText: "First Name_txt".tr,
                                   hintStyle: TextStyle(
                                     color: Colors.grey,
                                     fontWeight: FontWeight.bold,
@@ -565,6 +565,42 @@ class _RegisterState extends State<Register> {
                         const SizedBox(
                           height: 16,
                         ),
+
+                        SizedBox(
+                          height: 16.h,
+                        ),
+                        // EMAIL TEXT FIELD
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Theme(
+                              data: ThemeData.from(
+                                colorScheme: ColorScheme.fromSwatch(
+                                    primarySwatch: primaryColorSwatch),
+                              ),
+                              child: TextField(
+                                controller: registerController.signUpLastNameController,
+                                enabled: showSignUp.value,
+                                decoration: InputDecoration(
+                                  hintText: "LastName_txt".tr,
+                                  hintStyle: TextStyle(
+                                    color: Colors.grey,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black87,
+                                ),
+
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 16,
+                        ),
+
                         // PASSWORD TEXT FIELD
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -760,7 +796,7 @@ class _RegisterState extends State<Register> {
                                 registerController
                                     .loginPasswordController.text = "";
                                 registerController
-                                    .signUpUsernameController.text = "";
+                                    .signUpFirstNameController.text = "";
                                 registerController
                                     .signUpEmailController.text = "";
                                 registerController

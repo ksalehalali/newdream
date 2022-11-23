@@ -27,7 +27,9 @@ class RegisterController extends GetxController with BaseController {
 
   final loginEmailController = TextEditingController();
   final loginPasswordController = TextEditingController();
-  final signUpUsernameController = TextEditingController();
+  final signUpFirstNameController = TextEditingController();
+  final signUpLastNameController = TextEditingController();
+
   final signUpEmailController = TextEditingController();
   final signUpPasswordController = TextEditingController();
   final signUpConfirmPasswordController = TextEditingController();
@@ -55,7 +57,7 @@ class RegisterController extends GetxController with BaseController {
     super.onClose();
     loginEmailController.dispose();
     loginPasswordController.dispose();
-    signUpUsernameController.dispose();
+    signUpFirstNameController.dispose();
     signUpEmailController.dispose();
     signUpPasswordController.dispose();
     signUpConfirmPasswordController.dispose();
@@ -89,7 +91,7 @@ class RegisterController extends GetxController with BaseController {
 
       var response = await http.post(Uri.parse(baseURL + "/api/Login"), body: jsonEncode(
         {
-          "UserName": loginEmailController.text,
+          "UserName": "974${loginEmailController.text}",
           "Password": loginPasswordController.text
         },
       ), headers: head
@@ -124,7 +126,7 @@ print('login...');
         var jsonResponse = json.decode(response.body);
         if(jsonResponse["status"]){
           print('user data ::: ${jsonResponse["description"]}');
-          storeUserLoginPreference(jsonResponse["description"]["token"], jsonResponse["description"]["userName"], loginPasswordController.text, jsonResponse["description"]["id"],jsonResponse["description"]["email"]);
+          storeUserLoginPreference(jsonResponse["description"]["token"], jsonResponse["description"]["FirstName"], loginPasswordController.text, jsonResponse["description"]["id"],jsonResponse["description"]["email"]);
           accountController.fetchUserLoginPreference();
           user.accessToken = jsonResponse["description"]["token"];
           accountController.getMyProfile();
@@ -319,13 +321,11 @@ print('login...');
 
       if(response.statusCode == 200) {
         var jsonResponse = json.decode(response.body);
-        if(jsonResponse["status"]){
+        if(jsonResponse["status"]==true){
           Navigator.pop(context, 'OK');
           //add the installation to promoter
 
-
-
-          //Get.to(()=>MainScreen(indexOfScreen: 0,));
+          Get.offAll(()=>Register());
         } else{
           Fluttertoast.showToast(
               msg: "${jsonResponse["description"]}",
@@ -353,7 +353,7 @@ print('login...');
   Future <void> makeRegisterRequest (BuildContext context) async {
     print("CALLING makeRegisterRequest");
     clearUserData();
-    if (signUpUsernameController.text == "" ||
+    if (signUpFirstNameController.text == "" ||
         signUpPasswordController.text == "" ||
         signUpConfirmPasswordController.text == "") {
       // Fill the required information
@@ -385,12 +385,15 @@ print('login...');
         "Accept": "application/json",
         "content-type": "application/json"
       };
-
+      print("username: ${phoneNumber.replaceAll("+", "")}");
+      print("password: ${signUpPasswordController.text}");
       var response = await http.post(
           Uri.parse(baseURL + "/api/Register"), body: jsonEncode(
         {
           "UserName": phoneNumber.replaceAll("+", ""),
-          "Password": signUpPasswordController.text
+          "Password": signUpPasswordController.text,
+          "FirstName": signUpFirstNameController.text,
+          "LastName": signUpLastNameController.text
         },
       ), headers: head
       ).timeout(const Duration(seconds: 20), onTimeout: () {
@@ -412,7 +415,7 @@ print('login...');
       if (response.statusCode == 200) {
         var jsonResponse = json.decode(response.body);
         print('register data  = $jsonResponse');
-        if (jsonResponse["status"]) {
+
           // Sign up successful
           if (jsonResponse["status"]) {
             print(jsonResponse["description"]);
@@ -494,9 +497,7 @@ print('login...');
                 textColor: Colors.black,
                 fontSize: 16.0);
           }
-        } else {
-          // error
-        }
+
       }
     }
   }}

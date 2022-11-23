@@ -80,7 +80,7 @@ class _EditPersonalInfoScreenState extends State<EditPersonalInfoScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'First Name_txt',
+                          'First Name_txt'.tr,
                           style: TextStyle(
                               fontSize: 13,
                               fontWeight: FontWeight.w300,
