@@ -398,6 +398,7 @@ class _RegisterState extends State<Register> {
                               ),
                               child: TextField(
                                 controller: registerController.loginEmailController,
+                                keyboardType: TextInputType.number,
                                 style: TextStyle(
                                   fontWeight: FontWeight.w500,
                                   color: Colors.black87,

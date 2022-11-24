@@ -72,7 +72,7 @@ Map<String,String> ar ={
 
   'Create A New Account_txt':'انشاء حساب جديد',
   'Username_txt':'اسم المستخدم',
-  "Phone number_txt":'Phone number',
+  "Phone number_txt":'الجوال',
   'Email_txt':'البريد الإلكتروني',
   'Password_txt':'كلمة المرور',
   'Confirm Password_txt':'تاكيد كلمة المرور',
@@ -292,6 +292,8 @@ Map<String,String> en ={
   'Edit_txt':'Edit',
   'First Name_txt':'First Name',
   'Last Name_txt':'Last Name',
+  "Phone number_txt":'Phone number',
+
   'Receive Communications In_txt':'Receive Communications In',
   'SECURITY INFORMATION_txt':'SECURITY INFORMATION',
   'CHANGE PASSWORD_txt':'CHANGE PASSWORD',

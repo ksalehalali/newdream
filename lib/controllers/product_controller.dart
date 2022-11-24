@@ -749,8 +749,8 @@ class ProductsController extends GetxController with BaseController {
       'Content-Type': 'application/json'
     };
     var request = http.Request('POST',
-        Uri.parse('https://dashcommerce.click68.com/api/ListFavourite'));
-    request.body = json.encode({"PageNumber": "0", "SizeNumber": "1"});
+        Uri.parse('https://dashcommerce.click68.com/api/ListFavouriteByUser'));
+    request.body = json.encode({"PageNumber": 1, "SizeNumber": 111});
     request.headers.addAll(headers);
 
     http.StreamedResponse response = await request.send();

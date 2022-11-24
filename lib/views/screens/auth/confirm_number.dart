@@ -15,11 +15,16 @@ class ConfirmNumber extends StatefulWidget {
 class _ConfirmNumberState extends State<ConfirmNumber> {
 
   final confirmNumberController = Get.put(ConfirmNumberController());
-  PhoneNumber number = PhoneNumber(isoCode: 'KW');
+  PhoneNumber number = PhoneNumber(isoCode: 'QA');
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        foregroundColor: Colors.grey[800],
+        elevation: 0.0,
+        backgroundColor: Colors.transparent.withOpacity(0.0),
+      ),
       body: SafeArea(
         child: Container(
           margin: EdgeInsets.symmetric(horizontal: 16.0),

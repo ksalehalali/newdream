@@ -53,7 +53,7 @@ class AccountController extends GetxController {
 
 
     token.value = storage.read('token');
-    username.value = storage.read('username');
+    username.value = storage.read('userName');
     userEmail.value = storage.read('userEmail');
 
     print("ssssssssss ${username.value}");

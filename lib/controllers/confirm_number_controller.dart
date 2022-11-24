@@ -33,7 +33,9 @@ class ConfirmNumberController extends GetxController {
           textColor: Colors.black,
           fontSize: 16.0);
     } else {
-      var response = await http.post(Uri.parse(baseURL + "/api/RestUser"), body: jsonEncode(
+
+      print("reset pass user ${codeCredentials[0]}");
+      var response = await http.post(Uri.parse(baseURL + "/api/RequestResetPassword"), body: jsonEncode(
         {
           "UserName": "${codeCredentials[0]}",
         },
@@ -50,10 +52,13 @@ class ConfirmNumberController extends GetxController {
         );
         throw TimeoutException('The connection has timed out, Please try again!');
       });
+      print("${response.statusCode}");
+
+      print("${response.body}");
 
       if(response.statusCode == 200) {
         var jsonResponse = json.decode(response.body);
-        if(jsonResponse["status"]){
+        if(jsonResponse["status"]==true){
           Fluttertoast.showToast(
               msg: "An SMS message has been sent to your number.",
               toastLength: Toast.LENGTH_SHORT,

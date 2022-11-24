@@ -9,6 +9,7 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:http/http.dart' as http;
+import 'package:newdream/views/screens/auth/register.dart';
 import '../Assistants/globals.dart';
 
 class ResetPasswordController extends GetxController {
@@ -49,14 +50,17 @@ class ResetPasswordController extends GetxController {
           textColor: Colors.black,
           fontSize: 16.0);
     } else {
-      var response = await http.post(Uri.parse(baseURL + "/api/EditePassword"), body: jsonEncode(
+      var response = await http.post(Uri.parse(baseURL + "/api/ResetPassword"), body: jsonEncode(
         {
           "UserName": "${phoneNum}",
           "Code": "${codeController.text}",
-          "Password": "${passwordController.text}",
+          "NewPasswod": "${passwordController.text}",
         },
+
       ), headers: head
+
       ).timeout(const Duration(seconds: 20), onTimeout:() {
+
         Fluttertoast.showToast(
             msg: "The connection has timed out, Please try again!",
             toastLength: Toast.LENGTH_SHORT,
@@ -68,10 +72,15 @@ class ResetPasswordController extends GetxController {
         );
         throw TimeoutException('The connection has timed out, Please try again!');
       });
+      print("password ${passwordController.text}");
+      print("response: ${response.body}" );
+      print("code ${codeController.text}");
+      print("user ${phoneNum}");
+
       if(response.statusCode == 200) {
         var jsonResponse = json.decode(response.body);
         if(jsonResponse["status"]){
-         // Get.to(Login());
+        Get.offAll(Register());
         } else{
           Fluttertoast.showToast(
               msg: "${jsonResponse["description"]}",

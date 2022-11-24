@@ -126,7 +126,7 @@ print('login...');
         var jsonResponse = json.decode(response.body);
         if(jsonResponse["status"]){
           print('user data ::: ${jsonResponse["description"]}');
-          storeUserLoginPreference(jsonResponse["description"]["token"], jsonResponse["description"]["FirstName"], loginPasswordController.text, jsonResponse["description"]["id"],jsonResponse["description"]["email"]);
+          storeUserLoginPreference(token:jsonResponse["description"]["token"],username: loginEmailController.text,password: loginPasswordController.text,id: jsonResponse["description"]["id"],userEmail:jsonResponse["description"]["email"]);
           accountController.fetchUserLoginPreference();
           user.accessToken = jsonResponse["description"]["token"];
           accountController.getMyProfile();
@@ -142,6 +142,7 @@ print('login...');
               backgroundColor: Colors.white70,
               textColor: Colors.black,
               fontSize: 16.0);
+          print(response.body);
           hideLoading();
           Get.to(Register());
           return;
@@ -168,7 +169,7 @@ print('login...');
         "Password": password
       },
     ), headers: head
-    ).timeout(const Duration(seconds: 20), onTimeout:(){
+    ).timeout(const Duration(seconds: 10), onTimeout:(){
       Fluttertoast.showToast(
           msg: "The connection has timed out, Please try again!",
           toastLength: Toast.LENGTH_SHORT,
@@ -179,9 +180,10 @@ print('login...');
           fontSize: 16.0
       );
      // hideLoading();
-      throw TimeoutException('The connection has timed out, Please try again!');
-    });
+      Get.offAll(()=> Register());
+          throw TimeoutException('The connection has timed out, Please try again!');
 
+    });
     if(response.statusCode == 500) {
       Fluttertoast.showToast(
           msg: "Error 500",
@@ -203,7 +205,7 @@ print('login...');
         accountController.isLoggedIn.value =true;
 
         token = jsonResponse["description"]["token"];
-        storeUserLoginPreference(jsonResponse["description"]["token"], jsonResponse["description"]["userName"], password, jsonResponse["description"]["id"],jsonResponse["description"]["email"]);
+        //storeUserLoginPreference(token:jsonResponse["description"]["token"],username: jsonResponse["description"]["userName"],password: loginPasswordController.text,id: jsonResponse["description"]["id"],userEmail:jsonResponse["description"]["email"]);
         print(jsonResponse["description"]["token"]);
         accountController.fetchUserLoginPreference();
         user.accessToken = jsonResponse["description"]["token"];
@@ -231,7 +233,8 @@ print('login...');
 
   }
 
-  Future<void> storeUserLoginPreference(token, username, password, id,userEmail) async {
+  Future<void> storeUserLoginPreference(
+      {token, username, password, id, userEmail}) async {
     storage.write('token', token);
     storage.write('username', username);
     storage.write('userEmail', userEmail);

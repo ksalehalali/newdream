@@ -28,7 +28,7 @@ class _WalletScreenState extends State<WalletScreen> {
   }
   @override
   Widget build(BuildContext context) {
-  final screenSize = Get.size;
+  final screenSize = MediaQuery.of(context).size;
 
     return Container(
       child: Scaffold(
@@ -97,7 +97,7 @@ class _WalletScreenState extends State<WalletScreen> {
                                   SizedBox(height: 10.0,),
                                   AnimatedContainer(
                                     curve: Curves.easeInOut,
-                                    width:screenSize.width/2-15,
+                                    width:screenSize.width/2-13,
                                     height: 2.5,
                                     color: _color,
                                     duration: 900.milliseconds ,
@@ -127,7 +127,7 @@ class _WalletScreenState extends State<WalletScreen> {
                                   SizedBox(height: 10.0,),
                                   AnimatedContainer(
                                     curve: Curves.easeInOut,
-                                    width: screenSize.width/2-15,
+                                    width: screenSize.width/2-13,
                                     height: 2.5,
                                     color: _color2,
                                     duration: 900.milliseconds ,

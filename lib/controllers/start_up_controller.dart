@@ -34,8 +34,8 @@ class StartUpController extends GetxController {
     String? storageToken = storage.read('token');
     String? storageUsername = storage.read('username');
     String? storagePassword = storage.read('password');
-
-    print("ssssss ${storageToken}");
+print("storage username : $prefUsername");
+print("storage password : $storagePassword");
     if (storageToken == null) {
       print('null');
       SchedulerBinding.instance.addPostFrameCallback((_) {
@@ -45,7 +45,7 @@ class StartUpController extends GetxController {
     } else {
       token = storageToken;
       await registerController.makeAutoLoginRequest(
-          storageUsername, storagePassword);
+          "974$prefUsername", storagePassword);
     }
   }
 }
