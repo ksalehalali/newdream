@@ -62,7 +62,7 @@ class ProductsController extends GetxController with BaseController {
       'Lang': langCode
     };
     var request = http.Request('POST', Uri.parse('$baseURL/api/ListProduct'));
-    request.body = json.encode({"PageNumber": 0, "PageSize": 10});
+    request.body = json.encode({"PageNumber": 1, "PageSize": 10});
     request.headers.addAll(headers);
 
     http.StreamedResponse response = await request.send();
@@ -111,7 +111,7 @@ class ProductsController extends GetxController with BaseController {
     };
     var request =
     http.Request('POST', Uri.parse('$baseURL/api/ListProductByCategory'));
-    request.body = json.encode({"id": catId, "PageNumber": 0, "PageSize": 50});
+    request.body = json.encode({"id": catId, "PageNumber": 1, "PageSize": 50});
     request.headers.addAll(headers);
 
     http.StreamedResponse response = await request.send();
@@ -120,7 +120,7 @@ class ProductsController extends GetxController with BaseController {
       catProducts.value = [];
       var json = jsonDecode(await response.stream.bytesToString());
       var data = json['description'];
-
+      print("products $json");
       for (int i = 0; i < data.length; i++) {
         catProducts.add(ProductModel(
           id: data[i]['id'],
@@ -315,7 +315,7 @@ class ProductsController extends GetxController with BaseController {
     };
     var request =
         http.Request('POST', Uri.parse('$baseURL/api/ListProductByCategory'));
-    request.body = json.encode({"id": catId, "PageNumber": 0, "PageSize": 50});
+    request.body = json.encode({"id": catId, "PageNumber": 1, "PageSize": 50});
     request.headers.addAll(headers);
 
     http.StreamedResponse response = await request.send();
