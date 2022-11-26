@@ -138,7 +138,7 @@ class _PredictionTileState extends State<PredictionTile> {
 
     return InkWell(
       onTap: () {
-        productController.getOneProductDetails(widget.productPredictions!.id!);
+        productController.getOneProductDetails(widget.productPredictions!.id!,context);
 
         Get.to(() => ProductDetails(
           product: widget.productPredictions,

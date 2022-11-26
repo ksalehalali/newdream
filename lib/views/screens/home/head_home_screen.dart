@@ -27,11 +27,11 @@ Widget headHomeScreen(MediaQueryData screenSize) {
               ),
             ),
             SizedBox(
-              height: 4,
+              height: 3,
             ),
             Obx(()=>Text("${accountController.firstName.value}",
                   style: TextStyle(
-                      fontSize: 15,
+                      fontSize: 16,
                       color: Colors.grey[900],
                       fontWeight: FontWeight.bold)),
             )

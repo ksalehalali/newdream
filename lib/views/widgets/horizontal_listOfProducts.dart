@@ -37,7 +37,7 @@ Widget buildHorizontalListOfProducts(BuildContext context ,bool fromDetails) {
                             return InkWell(
                               onTap: () {
                                 productController.getOneProductDetails(
-                                  productController.latestProducts[index].id!,
+                                  productController.latestProducts[index].id!,context
                                 );
 
                                 Navigator.push(

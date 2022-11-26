@@ -1606,7 +1606,7 @@ class _ProductDetailsState extends State<ProductDetails>
                                     child: Column(
                                       children: [
                                         SizedBox(
-                                          height: 55.h,
+                                          height: screenSize.height *0.1 -20,
                                         ),
                                         Container(
                                           margin: EdgeInsets.only(
@@ -1615,8 +1615,8 @@ class _ProductDetailsState extends State<ProductDetails>
                                             children: [
                                               SvgPicture.asset(
                                                 'assets/icons/done.svg',
-                                                width: 34.w,
-                                                height: 34.h,
+                                                width:screenSize.width *0.1 -30,
+                                                height: screenSize.height *0.1 -30,
                                                 color: myHexColor,
                                               ),
                                               SizedBox(width: 4.w,),
@@ -1687,8 +1687,7 @@ class _ProductDetailsState extends State<ProductDetails>
                                                       Padding(
                                                         padding:
                                                         EdgeInsets.only(
-                                                            left:
-                                                            80.0.w),
+                                                            left: screenSize.width *0.1 -30.w),
                                                         child: Column(
                                                           crossAxisAlignment:
                                                           CrossAxisAlignment

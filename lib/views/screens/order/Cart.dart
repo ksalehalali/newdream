@@ -64,6 +64,26 @@ class _CartState extends State<Cart> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
+                            Align(
+                              alignment:langController.appLocal=='en' ? Alignment.topLeft: Alignment.topRight,
+                              child: InkWell(
+                                onTap: () {
+                                  Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>MainScreen(index: 0)));
+                                },
+                                child: Padding(
+                                  padding:  EdgeInsets.symmetric(horizontal: 6.0.w,vertical: 6.w),
+                                  child:  langController.appLocal=='en' ?Icon(
+                                     Icons.arrow_back_ios,
+                                    color: Colors.black87,
+                                    size: 28,
+                                  ):Icon(
+                                    Icons.arrow_back_ios,
+                                    color: Colors.black87,
+                                    size: 28,
+                                  ),
+                                ),
+                              ),
+                            ),
                             SvgPicture.asset("${assetsIconDir}sad cart.svg"),
                             const SizedBox(
                               height: 32,

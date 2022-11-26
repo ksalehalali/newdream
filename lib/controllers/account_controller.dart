@@ -53,8 +53,9 @@ class AccountController extends GetxController {
 
 
     token.value = storage.read('token');
-    username.value = storage.read('userName');
+    username.value = storage.read('firstName');
     userEmail.value = storage.read('userEmail');
+    firstName.value = storage.read('firstName');
 
     print("ssssssssss ${username.value}");
     print("tokenssss ${token.value}");
@@ -137,7 +138,7 @@ class AccountController extends GetxController {
       var json = jsonDecode(await response.stream.bytesToString());
       var data = json['description'];
       print('my data ::::: $data');
-      userEmail.value = data['email'];
+      userEmail.value = data['email']??'';
       username.value = data['userName'];
       lastName.value = data['lastName'];
       firstName.value = data['firstName'];

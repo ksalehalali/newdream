@@ -48,7 +48,7 @@ class ProductItemCard extends StatelessWidget {
     double buttonSize = 28;
     return InkWell(
       onTap: () {
-        productController.getOneProductDetails(product.id!);
+        productController.getOneProductDetails(product.id!,context);
         press();
         // print("product id === ${product.id}");
         // productController.getOneProductDetails(product.id!);
@@ -83,7 +83,7 @@ class ProductItemCard extends StatelessWidget {
           children: <Widget>[
             InkWell(
               onTap: () {
-                productController.getOneProductDetails(product.id!);
+                productController.getOneProductDetails(product.id!,context);
 
                 press();
                 // print(product.providerName);
@@ -192,7 +192,7 @@ class ProductItemCard extends StatelessWidget {
               top: screenSize.height * 0.3 - 22.h,
               child: InkWell(
                 onTap: () {
-                  productController.getOneProductDetails(product.id!);
+                  productController.getOneProductDetails(product.id!,context);
 
                   press();
                   // productController.getOneProductDetails(product.id!);

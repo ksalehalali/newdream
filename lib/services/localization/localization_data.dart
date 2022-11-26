@@ -202,7 +202,7 @@ Map<String,String> ar ={
 Map<String,String> en ={
 
   'my_account':'My Account',
-  'welcome_txt':'welcome',
+  'welcome_txt':'welcome!',
   'join us,login':''"We'd like if you joined us, login & access all of app features",
   'login_txt':'Login',
   'personal_info':'Personal Information',

@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
+import 'package:newdream/views/screens/main_screen.dart';
 import 'package:shimmer/shimmer.dart';
 import '../Assistants/globals.dart';
 import '../Assistants/request-assistant.dart';
@@ -452,7 +453,7 @@ class ProductsController extends GetxController with BaseController {
     }
   }
 
-  Future getOneProductDetails(String id) async {
+  Future getOneProductDetails(String id ,BuildContext context) async {
     gotProductDetails.value = false;
     getDetailsDone.value = false;
 
@@ -526,15 +527,26 @@ class ProductsController extends GetxController with BaseController {
       );
 
       sizes = productData['size'];
-      currentSizeSelected.value = sizes[0]['size'];
-      currentSizeIdSelected.value = sizes[0]['sizeID'];
-
-      colors = productData['size'][0]['color'];
-      sortQytsWithSizes();
 
       print('colors productData ${productDetails.colorsData}');
-      await addImagesData();
-      createImages(2);
+      print("image length ${productData['image'].length}");
+      if(productData['image'].length>0 && productData['size'].length>0 ){
+        await addImagesData();
+        createImages(2);
+        currentSizeSelected.value = sizes[0]['size'];
+        currentSizeIdSelected.value = sizes[0]['sizeID'];
+        colors = productData['size'][0]['color'];
+
+        sortQytsWithSizes();
+
+      }else{
+        Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>MainScreen(index: 0)), (route) => false);
+        Get.snackbar('No Data', "Product not available");
+        gotProductDetails.value =true;
+
+        return;
+      }
+
       print(product);
     }
     offerFromPrice.value = productDetails.price! * productDetails.offer! / 100;
