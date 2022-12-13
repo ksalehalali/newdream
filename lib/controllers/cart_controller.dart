@@ -215,11 +215,11 @@ class CartController extends GetxController with BaseController {
     print('invoiceId $invoiceId -- paymentGateway $paymentGateway -- invoice value $invoiceValue payment $payType --- adressId $addressId');
 
     http.StreamedResponse response = await request.send();
+    var jsonData = jsonDecode(await response.stream.bytesToString());
 
-    if (response.statusCode == 200) {
-      var json = jsonDecode(await response.stream.bytesToString());
+    if (response.statusCode == 200 && jsonData['status'] ==true)   {
       print(json);
-      var data = json['description'];
+      var data = jsonData['description'];
 
       lastOrder.addressID = storage.read("idAddressSelected");
       lastOrder.id = data['message'];
@@ -237,6 +237,8 @@ class CartController extends GetxController with BaseController {
       print(response.reasonPhrase);
       print(response.statusCode);
       hideLoading();
+      processing.value =false;
+      Get.snackbar("ERROR", "Some things went wrong");
       return false;
     }
   }
